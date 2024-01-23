@@ -28,6 +28,7 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     assert_redirected_to products_path
+    assert_equal flash[:notice], 'Your product was added correctly'
   end
   test 'Does not allow to create a new product with empty fields' do
     post products_path, params: {
@@ -38,5 +39,10 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
       }
     }
     assert_response :unprocessable_entity
+  end
+  test 'render update product form' do
+    get edit_product_path(products(:switch))
+    assert_response :success
+    assert_select 'form'
   end
 end
