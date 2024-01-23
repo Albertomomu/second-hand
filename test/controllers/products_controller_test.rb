@@ -45,4 +45,28 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select 'form'
   end
+  test 'allow to update a product' do
+    patch product_path(products(:switch)), params: {
+      product: {
+        price: 165
+      }
+    }
+    assert_redirected_to products_path
+    assert_equal flash[:notice], 'Your product was updated correctly'
+  end
+  test 'Does not allow to update a product with empty fields' do
+    patch product_path(products(:switch)), params: {
+      product: {
+        price: nil
+      }
+    }
+    assert_response :unprocessable_entity
+  end
+  test 'allow to delete a product' do
+    assert_difference('Product.count', -1) do
+      delete product_path(products(:switch))
+    end
+    assert_redirected_to products_path
+    assert_equal flash[:notice], 'Your product was deleted correctly'
+  end
 end

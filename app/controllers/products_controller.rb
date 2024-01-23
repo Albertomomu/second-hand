@@ -27,10 +27,18 @@ class ProductsController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
+  def destroy
+    @product = Product.find(params[:id])
+    if @product.destroy
+      redirect_to products_path, notice: "Your product was deleted correctly"
+    else
+      render :destroy, status: :unprocessable_entity
+    end
+  end
 
 private
 def product_params
-  params.require(:product).permit(:title, :description, :price)
+  params.require(:product).permit(:title, :description, :price, :photo)
 end
 
 end
