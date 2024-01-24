@@ -1,8 +1,1 @@
-<% @products.each do |product|  %>
-<%= link_to  product_path(product.id), class: 'product' do %>
-<h1 class="title"><%= product.title %></h1>
-<%= image_tag product.photo, width: 200 if product.photo.attached? %>
-<p class="description"><%= product.description %></p>
-<span class="price"><%= product.price %>$</span>
-<% end %>
-<% end %>
+<%= render partial: 'product', collection: @products%>
