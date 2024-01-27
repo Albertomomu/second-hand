@@ -5,4 +5,4 @@
 <br />
 <%= link_to  "Edit product", edit_product_path %>
 <br />
-<%= link_to  "Delete product", product_path(@product), data: {turbo_method: :delete} %>
+<%= link_to  "Delete product", product_path(@product), data: {turbo_method: :delete, turbo_confirm: t('common.confirm')} %>
