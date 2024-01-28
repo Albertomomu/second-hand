@@ -1,6 +1,4 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: %i[ edit update destroy ]
-
   # GET /categories or /categories.json
   def index
     @categories = Category.all
@@ -13,44 +11,40 @@ class CategoriesController < ApplicationController
 
   # GET /categories/1/edit
   def edit
+    category
   end
 
   # POST /categories or /categories.json
   def create
     @category = Category.new(category_params)
-
-    respond_to do |format|
-      if @category.save
-        format.html { redirect_to categories_url, notice: "Category was successfully created." }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-      end
+    if @category.save
+      redirect_to categories_url, notice: t('.created')
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /categories/1 or /categories/1.json
   def update
-    respond_to do |format|
-      if @category.update(category_params)
-        format.html { redirect_to categories_url, notice: "Category was successfully updated." }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
+    if category.update(category_params)
+      redirect_to categories_url, notice: t('.updated')
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   # DELETE /categories/1 or /categories/1.json
   def destroy
-    @category.destroy!
+    category.destroy
 
-    respond_to do |format|
-      format.html { redirect_to categories_url, notice: "Category was successfully destroyed." }
+    if category.destroy
+      redirect_to categories_url, notice: t('.destroyed')
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_category
+    def category
       @category = Category.find(params[:id])
     end
 
