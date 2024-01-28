@@ -29,5 +29,8 @@ module SecondHand
 
     #default language
     config.i18n.default_locale = :es
+
+    #Allow multiquery
+    config.active_record.async_query_executor = :global_thread_pool
   end
 end
